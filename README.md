@@ -40,4 +40,4 @@ npm run dev
 ```
 
 ## 📬 Contact
-For any inquiries or collaborations, reach out at: **your.email@example.com**
+For any inquiries or collaborations, reach out at: **kaushik.s.contact@gmail.com**
