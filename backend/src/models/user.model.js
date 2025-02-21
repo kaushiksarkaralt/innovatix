@@ -27,7 +27,8 @@ const userSchema = new Schema(
       required: true,
     },
     type: {
-      type: ["innovator", "developer", "business"],
+      type: String,
+      enum: ["innovator", "developer", "business"],
       required: true,
     },
   },
@@ -47,8 +48,8 @@ userSchema.methods.comparePassword = function (plainPassword) {
 };
 
 userSchema.methods.generateToken = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-    expiresIn: "1d",
+  return jwt.sign({ _id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: "7d",
   });
 };
 
