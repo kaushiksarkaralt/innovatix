@@ -25,6 +25,7 @@ Innovatix is a collaborative platform where individuals with innovative tech ide
 - **Database:** MongoDB
 - **AI Integration:** Gemini (for idea enhancement)
 - **Hosting:** GCP
+- **IDE:** IDX
 
 ## 🛠 Installation & Setup
 ```bash
