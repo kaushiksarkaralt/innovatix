@@ -19,8 +19,20 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Health Check Route
-app.get("/healthCheck", (req, res) => {
-  res.send("Api is working fine");
+import { ApiResponse } from "./utils/ApiResponse.js";
+
+app.get("/healthCheck", (_, res) => {
+  res.status(200).json(new ApiResponse(200, {}, "Server is up and running!"));
 });
+
+//Routes Import
+import { userRouter } from "./routes/user.routes.js";
+
+//Routes Definition
+app.use("/api/users", userRouter);
+
+// Error Handler
+import { errorHandler } from "./middlewares/errorHandler.middleware.js";
+app.use(errorHandler);
 
 export { app };
