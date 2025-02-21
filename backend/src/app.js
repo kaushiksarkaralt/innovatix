@@ -18,9 +18,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
-// test
-app.get("/", (req, res) => {
-  res.send("Hello World");
+// Health Check Route
+app.get("/healthCheck", (req, res) => {
+  res.send("Api is working fine");
 });
 
 export { app };
