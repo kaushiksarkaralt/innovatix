@@ -44,4 +44,27 @@ const signup = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, { token }, "User created"));
 });
 
-export { signup };
+const login = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  // Check if email and password are provided
+  if ([email, password].some((field) => !field?.trim())) {
+    throw new ApiError(400, "Email and password are required");
+  }
+
+  // Check if user exists
+  const user = await User.findOne({ email });
+  if (!user || !user.comparePassword(password)) {
+    throw new ApiError(401, "Invalid credentials");
+  }
+
+  // Generate token
+  const token = user.generateToken();
+
+  return res
+    .cookie("token", token, COOKIE_OPTIONS)
+    .status(200)
+    .json(new ApiResponse(200, { token }, "Login successful"));
+});
+
+export { signup, login };
