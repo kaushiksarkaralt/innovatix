@@ -28,4 +28,6 @@ const innovationSchema = new Schema(
   { timestamps: true }
 );
 
+innovationSchema.index({ title: "text", description: "text", tags: "text" });
+
 export const Innovation = mongoose.model("Innovation", innovationSchema);

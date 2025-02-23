@@ -34,7 +34,7 @@ import { innovationRouter } from "./routes/innovation.routes.js";
 
 //Routes Definition
 app.use("/api/users", userRouter);
-app.use("/api/innovatons", innovationRouter);
+app.use("/api/innovations", innovationRouter);
 
 // Error Handler
 app.use(errorHandler);
