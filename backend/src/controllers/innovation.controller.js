@@ -84,8 +84,8 @@ const updateInnovation = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { title, description, tags } = req.body;
 
-  if ([title, description].some((field) => !field?.trim())) {
-    throw new ApiError(400, "All fields are required");
+  if (!isValidObjectId(id)) {
+    throw new ApiError(400, "Invalid Innovation ID");
   }
 
   const innovation = await Innovation.findById(id);
@@ -98,9 +98,9 @@ const updateInnovation = asyncHandler(async (req, res) => {
     throw new ApiError(403, "You are not authorized to update this innovation");
   }
 
-  innovation.title = title;
-  innovation.description = description;
-  innovation.tags = tags;
+  if (title?.trim()) innovation.title = title;
+  if (description?.trim()) innovation.description = description;
+  if (isArray(tags)) innovation.tags = tags;
 
   await innovation.save();
 
