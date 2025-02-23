@@ -30,9 +30,11 @@ app.get("/api/healthCheck", (_, res) => {
 
 //Routes Import
 import { userRouter } from "./routes/user.routes.js";
+import { innovationRouter } from "./routes/innovation.routes.js";
 
 //Routes Definition
 app.use("/api/users", userRouter);
+app.use("/api/innovatons", innovationRouter);
 
 // Error Handler
 app.use(errorHandler);

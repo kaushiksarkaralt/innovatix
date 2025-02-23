@@ -5,6 +5,7 @@ const projectSchema = new Schema(
     title: {
       type: String,
       required: true,
+      trim: true,
     },
     repo: {
       type: String,
@@ -24,11 +25,15 @@ const projectSchema = new Schema(
     tags: [
       {
         type: String,
+        unique: true,
+        trim: true,
       },
     ],
     technologies: [
       {
         type: String,
+        unique: true,
+        trim: true,
       },
     ],
     innovationID: {

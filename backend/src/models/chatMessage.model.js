@@ -15,6 +15,7 @@ const chatMessageSchema = new Schema(
     message: {
       type: String,
       required: true,
+      trim: true,
     },
   },
   { timestamps: true }

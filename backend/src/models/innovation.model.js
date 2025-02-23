@@ -10,11 +10,20 @@ const innovationSchema = new Schema(
     title: {
       type: String,
       required: true,
+      trim: true,
     },
     description: {
       type: String,
       required: true,
+      trim: true,
     },
+    tags: [
+      {
+        type: String,
+        unique: true,
+        trim: true,
+      },
+    ],
   },
   { timestamps: true }
 );

@@ -15,6 +15,7 @@ const replySchema = new Schema(
     reply: {
       type: String,
       required: true,
+      trim: true,
     },
   },
   { timestamps: true }
