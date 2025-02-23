@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { Innovation } from "../models/innovation.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { isValidObjectId } from "mongoose";
 
 // TODO: implement a controller to enhance the innovation using gemini ai
 
@@ -49,6 +50,9 @@ const getInnovationByID = asyncHandler(async (req, res) => {
   const { id } = req.params;
   //TODO: fill likes, owner, comments
 
+  if (!isValidObjectId(id)) {
+    throw new ApiError(400, "Invalid Innovation ID");
+  }
   const innovation = await Innovation.findById(id)
     .populate("owner", "name username email")
     .exec();
@@ -80,10 +84,18 @@ const updateInnovation = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { title, description, tags } = req.body;
 
+  if ([title, description].some((field) => !field?.trim())) {
+    throw new ApiError(400, "All fields are required");
+  }
+
   const innovation = await Innovation.findById(id);
 
   if (!innovation) {
     throw new ApiError(404, "Innovation not found");
+  }
+
+  if (innovation.owner.toString() !== req.user._id.toString()) {
+    throw new ApiError(403, "You are not authorized to update this innovation");
   }
 
   innovation.title = title;
