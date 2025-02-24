@@ -25,14 +25,12 @@ const projectSchema = new Schema(
     tags: [
       {
         type: String,
-        unique: true,
         trim: true,
       },
     ],
     technologies: [
       {
         type: String,
-        unique: true,
         trim: true,
       },
     ],
@@ -44,5 +42,7 @@ const projectSchema = new Schema(
   },
   { timestamps: true }
 );
+
+projectSchema.index({ title: "text", tags: "text", technologies: "text" });
 
 export const Project = mongoose.model("Project", projectSchema);
