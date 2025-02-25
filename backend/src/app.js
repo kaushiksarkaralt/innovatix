@@ -32,11 +32,13 @@ app.get("/api/healthCheck", (_, res) => {
 import { userRouter } from "./routes/user.routes.js";
 import { innovationRouter } from "./routes/innovation.routes.js";
 import { projectRouter } from "./routes/project.routes.js";
+import { likeRouter } from "./routes/like.routes.js";
 
 //Routes Definition
 app.use("/api/users", userRouter);
 app.use("/api/innovations", innovationRouter);
 app.use("/api/projects", projectRouter);
+app.use("/api/likes", likeRouter);
 
 // Error Handler
 app.use(errorHandler);
