@@ -50,10 +50,7 @@ const getAllProjects = asyncHandler(async (req, res) => {
   //TODO: Add flag if user is a member/owner of the project
   //TODO: fill likes, owner, comments
   //TODO: sort by date, likes, comments
-  const projects = await Project.find().populate(
-    "owner",
-    "name email username"
-  );
+  const projects = await Project.find().populate("owner", "email username");
 
   res
     .status(200)
@@ -64,14 +61,13 @@ const getProjectById = asyncHandler(async (req, res) => {
   const { id } = req.params;
   //TODO: Add flag if user is a member/owner of the project
 
-
   if (!isValidObjectId(id)) {
     throw new ApiError(400, "Invalid Project ID");
   }
 
   const project = await Project.findById(id).populate(
     "owner",
-    "name email username"
+    "email username"
   );
   if (!project) {
     throw new ApiError(404, "Project not found");

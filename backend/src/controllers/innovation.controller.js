@@ -52,12 +52,11 @@ const getInnovationByID = asyncHandler(async (req, res) => {
   //TODO: fill likes, owner, comments
   //TODO: Add flag if user is a member/owner of the project
 
-
   if (!isValidObjectId(id)) {
     throw new ApiError(400, "Invalid Innovation ID");
   }
   const innovation = await Innovation.findById(id)
-    .populate("owner", "name username email")
+    .populate("owner", "username email")
     .exec();
 
   if (!innovation) {
@@ -74,7 +73,6 @@ const getInnovationByText = asyncHandler(async (req, res) => {
   //TODO: pagination
   //TODO: fill likes, owner, comments
   //TODO: Add flag if user is a member/owner of the project
-
 
   const innovations = await Innovation.find({
     $text: { $search: text },
