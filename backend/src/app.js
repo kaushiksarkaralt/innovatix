@@ -34,6 +34,7 @@ import { innovationRouter } from "./routes/innovation.routes.js";
 import { projectRouter } from "./routes/project.routes.js";
 import { likeRouter } from "./routes/like.routes.js";
 import { commentRouter } from "./routes/comment.routes.js";
+import { replyRouter } from "./routes/reply.routes.js";
 
 //Routes Definition
 app.use("/api/users", userRouter);
@@ -41,6 +42,7 @@ app.use("/api/innovations", innovationRouter);
 app.use("/api/projects", projectRouter);
 app.use("/api/likes", likeRouter);
 app.use("/api/comments", commentRouter);
+app.use("/api/replies", replyRouter);
 
 // Error Handler
 app.use(errorHandler);
