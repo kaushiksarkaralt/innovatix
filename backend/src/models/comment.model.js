@@ -14,6 +14,7 @@ const commentSchema = new Schema(
     innovationID: {
       type: Schema.Types.ObjectId,
       ref: "Innovation",
+      index: true,
     },
     comment: {
       type: String,
