@@ -2,7 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { Innovation } from "../models/innovation.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { isValidObjectId } from "mongoose";
+import mongoose, { isValidObjectId } from "mongoose";
 
 // TODO: implement a controller to enhance the innovation using gemini ai
 
@@ -38,9 +38,66 @@ const createInnovation = asyncHandler(async (req, res) => {
 
 const getAllInnovations = asyncHandler(async (req, res) => {
   //TODO: pagination
-  //TODO: fill likes, owner, comments
-  //TODO: Add flag if user is a member/owner of the project
-  const innovations = await Innovation.find({});
+  const innovations = await Innovation.aggregate([
+    {
+      $lookup: {
+        from: "likes",
+        localField: "_id",
+        foreignField: "innovationID",
+        as: "likes",
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "owner",
+        foreignField: "_id",
+        as: "owner",
+        pipeline: [
+          {
+            $project: {
+              username: 1,
+              email: 1,
+            },
+          },
+        ],
+      },
+    },
+    {
+      $lookup: {
+        from: "comments",
+        localField: "_id",
+        foreignField: "innovationID",
+        as: "comments",
+      },
+    },
+    {
+      $addFields: {
+        likesCount: {
+          $size: "$likes",
+        },
+        commentsCount: {
+          $size: "$comments",
+        },
+        owner: {
+          $first: "$owner",
+        },
+      },
+    },
+    {
+      $addFields: {
+        isOwner: {
+          $eq: [{ $toString: "$owner._id" }, { $toString: req.user._id }],
+        },
+      },
+    },
+    {
+      $project: {
+        likes: 0,
+        comments: 0,
+      },
+    },
+  ]);
 
   return res
     .status(200)
