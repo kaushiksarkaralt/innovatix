@@ -106,15 +106,76 @@ const getAllInnovations = asyncHandler(async (req, res) => {
 
 const getInnovationByID = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  //TODO: fill likes, owner, comments
-  //TODO: Add flag if user is a member/owner of the project
 
   if (!isValidObjectId(id)) {
     throw new ApiError(400, "Invalid Innovation ID");
   }
-  const innovation = await Innovation.findById(id)
-    .populate("owner", "username email")
-    .exec();
+
+  const innovation = await Innovation.aggregate([
+    {
+      $match: {
+        _id: new mongoose.Types.ObjectId(id),
+      },
+    },
+    {
+      $lookup: {
+        from: "likes",
+        localField: "_id",
+        foreignField: "innovationID",
+        as: "likes",
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "owner",
+        foreignField: "_id",
+        as: "owner",
+        pipeline: [
+          {
+            $project: {
+              username: 1,
+              email: 1,
+            },
+          },
+        ],
+      },
+    },
+    {
+      $lookup: {
+        from: "comments",
+        localField: "_id",
+        foreignField: "innovationID",
+        as: "comments",
+      },
+    },
+    {
+      $addFields: {
+        likesCount: {
+          $size: "$likes",
+        },
+        commentsCount: {
+          $size: "$comments",
+        },
+        owner: {
+          $first: "$owner",
+        },
+      },
+    },
+    {
+      $addFields: {
+        isOwner: {
+          $eq: [{ $toString: "$owner._id" }, { $toString: req.user._id }],
+        },
+      },
+    },
+    {
+      $project: {
+        likes: 0,
+        comments: 0,
+      },
+    },
+  ]);
 
   if (!innovation) {
     throw new ApiError(404, "Innovation not found");
@@ -128,12 +189,78 @@ const getInnovationByID = asyncHandler(async (req, res) => {
 const getInnovationByText = asyncHandler(async (req, res) => {
   const { text } = req.body;
   //TODO: pagination
-  //TODO: fill likes, owner, comments
-  //TODO: Add flag if user is a member/owner of the project
 
-  const innovations = await Innovation.find({
-    $text: { $search: text },
-  });
+  if (!text?.trim()) {
+    throw new ApiError(400, "Text is required");
+  }
+
+  const innovations = await Innovation.aggregate([
+    {
+      $match:{
+        $text: {
+          $search: text,
+        },
+      }
+    },
+    {
+      $lookup: {
+        from: "likes",
+        localField: "_id",
+        foreignField: "innovationID",
+        as: "likes",
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "owner",
+        foreignField: "_id",
+        as: "owner",
+        pipeline: [
+          {
+            $project: {
+              username: 1,
+              email: 1,
+            },
+          },
+        ],
+      },
+    },
+    {
+      $lookup: {
+        from: "comments",
+        localField: "_id",
+        foreignField: "innovationID",
+        as: "comments",
+      },
+    },
+    {
+      $addFields: {
+        likesCount: {
+          $size: "$likes",
+        },
+        commentsCount: {
+          $size: "$comments",
+        },
+        owner: {
+          $first: "$owner",
+        },
+      },
+    },
+    {
+      $addFields: {
+        isOwner: {
+          $eq: [{ $toString: "$owner._id" }, { $toString: req.user._id }],
+        },
+      },
+    },
+    {
+      $project: {
+        likes: 0,
+        comments: 0,
+      },
+    },
+  ]);
 
   return res
     .status(200)
