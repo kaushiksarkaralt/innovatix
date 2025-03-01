@@ -1,4 +1,6 @@
 import express from "express";
+import http from "http";
+import { Server } from "socket.io";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -9,6 +11,7 @@ import { ApiResponse } from "./utils/ApiResponse.js";
 import { errorHandler } from "./middlewares/errorHandler.middleware.js";
 
 const app = express();
+const server = http.createServer(app);
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",");
 console.log("Allowed Origins:", process.env.MONGO_URI);
@@ -16,6 +19,9 @@ const corsOptions = {
   origin: allowedOrigins,
   credentials: true,
 };
+
+// Socket.io
+const io = initializeSocket(server);
 
 // Middlewares
 app.use(cors(corsOptions));
@@ -35,6 +41,7 @@ import { projectRouter } from "./routes/project.routes.js";
 import { likeRouter } from "./routes/like.routes.js";
 import { commentRouter } from "./routes/comment.routes.js";
 import { replyRouter } from "./routes/reply.routes.js";
+import { initializeSocket } from "./socket/socket.js";
 
 //Routes Definition
 app.use("/api/users", userRouter);
@@ -47,4 +54,4 @@ app.use("/api/replies", replyRouter);
 // Error Handler
 app.use(errorHandler);
 
-export { app };
+export { app, server, io };
