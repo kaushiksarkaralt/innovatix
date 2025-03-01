@@ -1,4 +1,4 @@
-import { isValidObjectId } from "mongoose";
+import mongoose, { isValidObjectId } from "mongoose";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { Project } from "../models/project.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
@@ -47,10 +47,70 @@ const createProject = asyncHandler(async (req, res) => {
 
 const getAllProjects = asyncHandler(async (req, res) => {
   //TODO: Add pagination
-  //TODO: Add flag if user is a member/owner of the project
-  //TODO: fill likes, owner, comments
   //TODO: sort by date, likes, comments
-  const projects = await Project.find().populate("owner", "email username");
+  const projects = await Project.aggregate([
+    {
+      $lookup: {
+        from: "likes",
+        localField: "_id",
+        foreignField: "projectID",
+        as: "likes",
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "owner",
+        foreignField: "_id",
+        as: "owner",
+        pipeline: [
+          {
+            $project: {
+              username: 1,
+              email: 1,
+            },
+          },
+        ],
+      },
+    },
+    {
+      $lookup: {
+        from: "comments",
+        localField: "_id",
+        foreignField: "projectID",
+        as: "comments",
+      },
+    },
+    {
+      $addFields: {
+        likesCount: {
+          $size: "$likes",
+        },
+        commentsCount: {
+          $size: "$comments",
+        },
+        owner: {
+          $first: "$owner",
+        },
+      },
+    },
+    {
+      $addFields: {
+        isOwner: {
+          $eq: [{ $toString: "$owner._id" }, { $toString: req.user._id }],
+        },
+        isMember: {
+          $in: [req.user._id, "$members"],
+        },
+      },
+    },
+    {
+      $project: {
+        likes: 0,
+        comments: 0,
+      },
+    },
+  ]);
 
   res
     .status(200)
@@ -59,16 +119,80 @@ const getAllProjects = asyncHandler(async (req, res) => {
 
 const getProjectById = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  //TODO: Add flag if user is a member/owner of the project
 
   if (!isValidObjectId(id)) {
     throw new ApiError(400, "Invalid Project ID");
   }
 
-  const project = await Project.findById(id).populate(
-    "owner",
-    "email username"
-  );
+  const project = await Project.aggregate([
+    {
+      $match: {
+        _id: new mongoose.Types.ObjectId(id),
+      },
+    },
+    {
+      $lookup: {
+        from: "likes",
+        localField: "_id",
+        foreignField: "projectID",
+        as: "likes",
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "owner",
+        foreignField: "_id",
+        as: "owner",
+        pipeline: [
+          {
+            $project: {
+              username: 1,
+              email: 1,
+            },
+          },
+        ],
+      },
+    },
+    {
+      $lookup: {
+        from: "comments",
+        localField: "_id",
+        foreignField: "projectID",
+        as: "comments",
+      },
+    },
+    {
+      $addFields: {
+        likesCount: {
+          $size: "$likes",
+        },
+        commentsCount: {
+          $size: "$comments",
+        },
+        owner: {
+          $first: "$owner",
+        },
+      },
+    },
+    {
+      $addFields: {
+        isOwner: {
+          $eq: [{ $toString: "$owner._id" }, { $toString: req.user._id }],
+        },
+        isMember: {
+          $in: [req.user._id, "$members"],
+        },
+      },
+    },
+    {
+      $project: {
+        likes: 0,
+        comments: 0,
+      },
+    },
+  ]);
+
   if (!project) {
     throw new ApiError(404, "Project not found");
   }
