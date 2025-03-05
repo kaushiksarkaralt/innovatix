@@ -47,12 +47,16 @@ const Navbar = () => {
           </li>
         </ul>
         <div className="flex justify-center pb-4 md:px-2 md:pb-0 md:items-center">
-          <Button variant="secondary" className="mx-2">
-            Log In
-          </Button>
-          <Button variant="secondary" className="mx-2">
-            Sign Up
-          </Button>
+          <Link to="/login">
+            <Button variant="secondary" className="mx-2">
+              Log In
+            </Button>
+          </Link>
+          <Link to="/signup">
+            <Button variant="secondary" className="mx-2">
+              Sign Up
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
