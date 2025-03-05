@@ -1,6 +1,6 @@
 import { FaBars } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Link } from "react-router";
 
 const Navbar = () => {
@@ -11,6 +11,18 @@ const Navbar = () => {
       linkRef.current.classList.toggle("hidden");
     }
   };
+  const handleClickOutside = (event: MouseEvent) => {
+    if (linkRef.current && !linkRef.current.contains(event.target as Node)) {
+      linkRef.current.classList.add("hidden");
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
     <div className="fixed bg-black/40 backdrop-blur-md text-white w-full md:flex md:items-center">
       <div className="h-full flex justify-between p-4 items-center shadow-2xl md:w-1/3">
