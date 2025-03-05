@@ -1,6 +1,7 @@
 import { FaBars } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import { useRef } from "react";
+import { Link } from "react-router";
 
 const Navbar = () => {
   const linkRef = useRef<HTMLDivElement>(null);
@@ -29,11 +30,21 @@ const Navbar = () => {
       </div>
       <div className="hidden md:flex md:w-2/3 md:justify-end" ref={linkRef}>
         <ul className="flex flex-col items-center p-3 text-2xl space-y-2 md:flex-row md:space-y-0 md:space-x-3 md:text-xl">
-          <li>Home</li>
-          <li>About</li>
-          <li>Innovations</li>
-          <li>Projects</li>
-          <li>Contact</li>
+          <li className="border-b-2 border-transparent hover:border-purple-600 hover:text-purple-600 cursor-pointer transition-all duration-150 ">
+            <Link to="/">Home</Link>
+          </li>
+          <li className="border-b-2 border-transparent hover:border-purple-600 hover:text-purple-600 cursor-pointer transition-all duration-150 ">
+            <Link to="/about">About</Link>
+          </li>
+          <li className="border-b-2 border-transparent hover:border-purple-600 hover:text-purple-600 cursor-pointer transition-all duration-150 ">
+            <Link to="/innovate">Innovations</Link>
+          </li>
+          <li className="border-b-2 border-transparent hover:border-purple-600 hover:text-purple-600 cursor-pointer transition-all duration-150 ">
+            <Link to="/projects">Projects</Link>
+          </li>
+          <li className="border-b-2 border-transparent hover:border-purple-600 hover:text-purple-600 cursor-pointer transition-all duration-150 ">
+            <Link to="/contact">Contact</Link>
+          </li>
         </ul>
         <div className="flex justify-center pb-4 md:px-2 md:pb-0 md:items-center">
           <Button variant="secondary" className="mx-2">
