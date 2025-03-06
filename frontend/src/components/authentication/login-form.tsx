@@ -35,14 +35,14 @@ export function LoginForm({
               <div className="grid gap-3">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
-                  <a
-                    href="#"
-                    className="ml-auto text-sm underline-offset-2 hover:underline"
-                  >
-                    Forgot your password?
-                  </a>
                 </div>
                 <Input id="password" type="password" required />
+                <a
+                  href="#"
+                  className="text-xs underline-offset-2 hover:underline"
+                >
+                  Forgot your password?
+                </a>
               </div>
               <Button type="submit" className="w-full">
                 Login
@@ -66,8 +66,11 @@ export function LoginForm({
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our{" "}
+        <a href="https://github.com/24kaushik/innovatix/blob/main/terms-of-service.md">
+          Terms of Service
+        </a>
+        .
       </div>
     </div>
   );
