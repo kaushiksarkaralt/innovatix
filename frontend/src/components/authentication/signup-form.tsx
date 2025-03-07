@@ -28,7 +28,7 @@ export function SignupForm({
                 <Input
                   id="firstname"
                   type="firstname"
-                  placeholder="Jhon"
+                  placeholder="John"
                   required
                 />
               </div>
@@ -55,7 +55,7 @@ export function SignupForm({
                 <Input
                   id="username"
                   type="username"
-                  placeholder="jhonwick01"
+                  placeholder="Johnwick01"
                   required
                 />
               </div>
@@ -87,8 +87,7 @@ export function SignupForm({
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our <a href="https://github.com/24kaushik/innovatix/blob/main/terms-of-service.md">Terms of Service</a>.
       </div>
     </div>
   );

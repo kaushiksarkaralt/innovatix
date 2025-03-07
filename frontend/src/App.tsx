@@ -3,6 +3,7 @@ import Home from "./pages/Home.tsx";
 import Navbar from "./components/navbar.tsx";
 import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
+import Footer from "./components/footer.tsx";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </>
   );
