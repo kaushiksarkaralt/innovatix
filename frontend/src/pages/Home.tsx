@@ -109,7 +109,7 @@ const About = () => {
               {e.description}
             </CardContent>
             <div className="flex justify-center">
-              <Button className="bg-indigo-700 text-white">{e.btnText}</Button>
+              <Button className="bg-indigo-700 hover:bg-indigo-900 text-white">{e.btnText}</Button>
             </div>
           </Card>
         ))}
