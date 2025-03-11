@@ -85,7 +85,7 @@ const InnovationCard = ({
             </Badge>
           </div>
         </div>
-        <CardTitle className="text-xl leading-5 tracking-tight font-normal">
+        <CardTitle className="text-xl mt-1 leading-5 tracking-tight font-normal">
           {title}
         </CardTitle>
       </CardHeader>
@@ -94,20 +94,20 @@ const InnovationCard = ({
           {description}
         </CardDescription>
         <CardFooter className="px-0 pt-3">
-          <div className="flex justify-around items-center w-full">
+          <div className="flex justify-around space-x-2 items-center w-full">
             <div className="w-1/3">
               <Button size="sm">Read More</Button>
             </div>
-            <div className="flex justify-evenly w-2/3 space-x-2 sm:space-x-0">
-              <Button variant="secondary" size="sm" className="rounded-4xl">
+            <div className="flex px-3 space-x-2 sm:space-x-0 bg-muted rounded-4xl">
+              <Button variant="ghost" size="sm" className="rounded-4xl">
                 <span>{likes}</span>
                 <FaRegThumbsUp size={20} />
               </Button>
-              <Button variant="secondary" size="sm" className="rounded-4xl">
+              <Button variant="ghost" size="sm" className="rounded-4xl">
                 <span>{comments}</span>
                 <MdOutlineInsertComment size={20} />
               </Button>
-              <Button variant="secondary" size="sm" className="rounded-4xl">
+              <Button variant="ghost" size="sm" className="rounded-4xl">
                 <span>Copy</span>
                 <FaRegCopy size={20} />
               </Button>
