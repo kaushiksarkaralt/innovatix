@@ -133,7 +133,7 @@ const Details = ({ innovation }: { innovation: innovationType }) => {
     <div>
       {
         <div className="text-gray-100 whitespace-pre-line text-lg  px-5 md:px-10">
-          <p>{innovation.description}</p>
+          <p className="px-3 md:px-5">{innovation.description}</p>
         </div>
       }
     </div>
