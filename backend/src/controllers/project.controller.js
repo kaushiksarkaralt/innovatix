@@ -82,6 +82,14 @@ const getAllProjects = asyncHandler(async (req, res) => {
       },
     },
     {
+      $lookup: {
+        from: "innovations",
+        localField: "innovationID",
+        foreignField: "_id",
+        as: "innovation",
+      },
+    },
+    {
       $addFields: {
         likesCount: {
           $size: "$likes",
@@ -91,6 +99,9 @@ const getAllProjects = asyncHandler(async (req, res) => {
         },
         owner: {
           $first: "$owner",
+        },
+        innovationTitle: {
+          $first: "$innovation.title",
         },
       },
     },
@@ -108,6 +119,7 @@ const getAllProjects = asyncHandler(async (req, res) => {
       $project: {
         likes: 0,
         comments: 0,
+        innovation: 0,
       },
     },
   ]);
@@ -163,6 +175,14 @@ const getProjectById = asyncHandler(async (req, res) => {
       },
     },
     {
+      $lookup: {
+        from: "innovations",
+        localField: "innovationID",
+        foreignField: "_id",
+        as: "innovation",
+      },
+    },
+    {
       $addFields: {
         likesCount: {
           $size: "$likes",
@@ -172,6 +192,9 @@ const getProjectById = asyncHandler(async (req, res) => {
         },
         owner: {
           $first: "$owner",
+        },
+        innovationTitle: {
+          $first: "$innovation.title",
         },
       },
     },
@@ -189,6 +212,7 @@ const getProjectById = asyncHandler(async (req, res) => {
       $project: {
         likes: 0,
         comments: 0,
+        innovation: 0,
       },
     },
   ]);
