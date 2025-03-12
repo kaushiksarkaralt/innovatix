@@ -8,9 +8,10 @@ import {
   CardContent,
 } from "../ui/card";
 import { Button } from "../ui/button";
-import { FaRegCopy, FaRegThumbsUp } from "react-icons/fa";
+import { FaRegThumbsUp } from "react-icons/fa";
 import { MdOutlineInsertComment } from "react-icons/md";
 import { Badge } from "../ui/badge";
+import { PiProjectorScreenChart } from "react-icons/pi";
 
 interface InnovationCardProps {
   title: string;
@@ -23,6 +24,7 @@ interface InnovationCardProps {
   feasibility: number;
   likes: number;
   comments: number;
+  projects: number;
 }
 
 const InnovationCard = ({
@@ -33,6 +35,7 @@ const InnovationCard = ({
   feasibility,
   likes,
   comments,
+  projects
 }: InnovationCardProps) => {
   // bg-green-600 5
   // bg-lime-400 4
@@ -94,7 +97,7 @@ const InnovationCard = ({
           {description}
         </CardDescription>
         <CardFooter className="px-0 pt-3">
-          <div className="flex justify-around space-x-2 items-center w-full">
+          <div className="flex justify-between space-x-2 items-center w-full">
             <div className="w-1/3">
               <Button size="sm">Read More</Button>
             </div>
@@ -108,8 +111,8 @@ const InnovationCard = ({
                 <MdOutlineInsertComment size={20} />
               </Button>
               <Button variant="ghost" size="sm" className="rounded-4xl">
-                <span>Copy</span>
-                <FaRegCopy size={20} />
+                <span>{projects}</span>
+                <PiProjectorScreenChart size={20} />
               </Button>
             </div>
           </div>

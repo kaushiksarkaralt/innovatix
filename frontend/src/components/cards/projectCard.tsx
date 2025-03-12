@@ -62,7 +62,9 @@ const ProjectCard = ({
             <span className="text-blue-400"> {innovationTitle}</span>
           </p>
           <p>
-            <span className="underline underline-offset-3">Technologies Used:</span>
+            <span className="underline underline-offset-3">
+              Technologies Used:
+            </span>
             <span className="text-gray-400"> {technologies.join(", ")}</span>
           </p>
           <p>
@@ -71,25 +73,27 @@ const ProjectCard = ({
           </p>
         </CardDescription>
         <CardFooter className="px-0 pt-3">
-          <div className="flex justify-around items-center w-full">
+          <div className="flex justify-between items-center w-full">
             <div className="w-1/3">
               <Button size="sm">Show details</Button>
             </div>
-            <div className="flex px-3 space-x-2 sm:space-x-0 bg-muted rounded-4xl">
-              <Button variant="ghost" size="sm">
-                <span>{likes}</span>
-                <FaRegThumbsUp size={20} />
-              </Button>
-              <Button variant="ghost" size="sm" className="">
-                <span>{comments}</span>
-                <MdOutlineInsertComment size={20} />
-              </Button>
+            <div className="flex space-x-2">
+              <div className="flex px-3 space-x-2 sm:space-x-0 bg-muted rounded-4xl">
+                <Button variant="ghost" size="sm">
+                  <span>{likes}</span>
+                  <FaRegThumbsUp size={20} />
+                </Button>
+                <Button variant="ghost" size="sm" className="">
+                  <span>{comments}</span>
+                  <MdOutlineInsertComment size={20} />
+                </Button>
+              </div>
+              <a href={repo} target="_blank">
+                <Button variant="secondary" size="sm" className="rounded-full">
+                  <FaGithub size={20} />
+                </Button>
+              </a>
             </div>
-            <a href={repo} target="_blank">
-              <Button variant="secondary" size="sm" className="rounded-full">
-                <FaGithub size={20} />
-              </Button>
-            </a>
           </div>
         </CardFooter>
       </CardContent>
