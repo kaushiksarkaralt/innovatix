@@ -139,6 +139,7 @@ const InnovationsList = () => {
           feasibility={innovation.feasibility}
           likes={innovation.likes}
           comments={innovation.comments}
+          projects={4}
           key={index}
         />
       ))}

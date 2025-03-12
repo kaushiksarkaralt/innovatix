@@ -148,3 +148,4 @@ const ProjectsList = () => {
 };
 
 export default Projects;
+export { ProjectsList };
