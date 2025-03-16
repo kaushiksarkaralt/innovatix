@@ -1,10 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
+import { useParams } from "react-router";
+
 import { BlackSpotlight } from "@/components/backgrounds/black-spotlight";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { IoPersonCircle } from "react-icons/io5";
-import { useParams } from "react-router";
+import { Textarea } from "@/components/ui/textarea";
+
 import { ProjectsList } from "./Projects";
+
+import { IoPersonCircle } from "react-icons/io5";
+import { FaRegThumbsUp } from "react-icons/fa";
+import { MdOutlineInsertComment } from "react-icons/md";
+import { FaShareFromSquare } from "react-icons/fa6";
 
 interface innovationType {
   title: string;
@@ -131,11 +137,9 @@ Tags: AI, Debugging, Code Review, Automation, Software Development
 const Details = ({ innovation }: { innovation: innovationType }) => {
   return (
     <div>
-      {
-        <div className="text-gray-100 whitespace-pre-line text-lg  px-5 md:px-10">
-          <p className="px-3 md:px-5">{innovation.description}</p>
-        </div>
-      }
+      <div className="text-gray-100 whitespace-pre-line text-lg px-5 md:px-10">
+        <p className="px-3 md:px-5">{innovation.description}</p>
+      </div>
     </div>
   );
 };
@@ -149,9 +153,75 @@ const Projects = () => {
 };
 
 const Comments = () => {
+  const comments = [
+    {
+      name: "Full Name",
+      username: "@username",
+      comment: "This is a comment",
+    },
+    {
+      name: "Full Name",
+      username: "@username",
+      comment: "This is a comment",
+    },
+    {
+      name: "Full Name",
+      username: "@username",
+      comment: "This is a comment",
+    },
+  ];
   return (
-    <div>
-      <h1>Comments</h1>
+    <div className="px-5 md:px-10">
+      <form className="flex mt-2 mb-5">
+        <Textarea placeholder="Add a comment" className="bg-muted min-h-0" />
+        <Button className="ml-2">Comment</Button>
+      </form>
+      <p className="text-muted-foreground my-3">Comments</p>
+      <div>
+        {comments.map((comment, i) => (
+          <div className="border-l-4 border-white p-2 my-5 bg-muted rounded-r-lg" key={i}>
+            <div className="flex items-center">
+              <IoPersonCircle size={35} className="text-gray-100" />
+              <div>
+                <p className="text-base leading-3 text-gray-100">
+                  {comment.name}
+                </p>
+                <p className="text-sm leading-3 text-gray-100">
+                  {comment.username}
+                </p>
+              </div>
+            </div>
+            <div>
+              <p className="text-gray-100 text-lg leading-3 p-1">
+                {comment.comment}
+              </p>
+            </div>
+            <div className="flex space-x-4 mt-2 bg-neutral-900 px-3 w-min rounded-4xl">
+              <Button
+                variant="ghost"
+                className="flex items-center space-x-1 text-gray-100"
+              >
+                <span>Like</span>
+                <FaRegThumbsUp size={20} />
+              </Button>
+              <Button
+                variant="ghost"
+                className="flex items-center space-x-1 text-gray-100"
+              >
+                <span>Reply</span>
+                <MdOutlineInsertComment size={20} />
+              </Button>
+              <Button
+                variant="ghost"
+                className="flex items-center space-x-1 text-gray-100"
+              >
+                <span>Share</span>
+                <FaShareFromSquare size={20} />
+              </Button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

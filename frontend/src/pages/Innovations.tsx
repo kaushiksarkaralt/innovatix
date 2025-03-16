@@ -8,6 +8,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
+import { FaPlus } from "react-icons/fa";
 
 import { IoFilterCircle } from "react-icons/io5";
 
@@ -28,28 +29,31 @@ const TopPortion = () => {
       <h1 className="text-4xl text-center font-josefins md:text-6xl">
         Explore Innovations
       </h1>
-      <div className="flex justify-center items-center my-5">
-        <form className="flex space-x-2">
-          <Input
-            className="bg-black/45 border-gray-800 w-48 md:w-96"
-            placeholder="Search Innovations"
-          />
-          <Button type="submit">Search</Button>
-        </form>
-        <Select
-          onValueChange={(val) => {
-            console.log(val);
-          }}
-        >
-          <SelectTrigger className="border-0 ml-5">
-            <IoFilterCircle className="text-white" size={40} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="likes">Likes</SelectItem>
-            <SelectItem value="newest">Newest</SelectItem>
-            <SelectItem value="oldest">Oldest</SelectItem>
-          </SelectContent>
-        </Select>
+      <div className="md:flex md:items-center md:justify-center md:space-x-6">
+        <div className="flex justify-center items-center my-5">
+          <form className="flex space-x-2">
+            <Input
+              className="bg-black/45 border-gray-800 w-48 md:w-96"
+              placeholder="Search Innovations"
+            />
+            <Button type="submit">Search</Button>
+          </form>
+          <Select
+            onValueChange={(val) => {
+              console.log(val);
+            }}
+          >
+            <SelectTrigger className="border-0 ml-5">
+              <IoFilterCircle className="text-white" size={40} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="likes">Likes</SelectItem>
+              <SelectItem value="newest">Newest</SelectItem>
+              <SelectItem value="oldest">Oldest</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <Button className="mx-auto flex md:mx-0"><FaPlus /> Create Innovation</Button>
       </div>
     </div>
   );
