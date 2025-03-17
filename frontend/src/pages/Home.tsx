@@ -131,7 +131,7 @@ const About = () => {
     {
       title: "Startups",
       description:
-        "Successful projects with high potential can grow into thriving startups, attracting funding, users, and business opportunities.",
+        "Successful projects with high potential can grow into startups, attracting funding, and business opportunities.",
       image: StartupImg,
       btnText: "Explore Ideas",
       icon: <IoRocketSharp className="text-green-400" size={28} />
